@@ -1,0 +1,6 @@
+export const ReducerTypes = {
+    'INIT_SESSION': 'INIT_SESSION',
+    'SET_CURRENT_CHAT': 'SET_CURRENT_CHAT',
+    'ADD_MESSAGE': 'ADD_MESSAGE',
+    'ADD_ONLINE_USER': 'ADD_ONLINE_USER',
+}

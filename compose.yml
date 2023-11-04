@@ -1,0 +1,29 @@
+version: "3"
+services:
+  rabbit-service:
+    build:
+      context: .
+      dockerfile: ./containers/rabbitmq.dockerfile
+    restart: always
+    ports:
+      - "15691:15691"
+      - "15692:15692"
+      - "25672:25672"
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "15674:15674"
+      - "15672:15672"
+    deploy:
+      mode: replicated
+      replicas: 1
+  front-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "3000:80"
+    deploy:
+      mode: replicated
+      replicas: 1
