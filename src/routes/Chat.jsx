@@ -1,13 +1,14 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState} from "react"
 import { useLocation } from "wouter";
 import { UserChatButton } from "../components/UserChatButton"
 import { GlobalContext } from "../context/GlobalContext"
 import { MyMessage } from './../components/MyMessage'
 import { Message } from './../components/Message'
-import Emogis from "./Emogis";
+import { EmojiMenuPicker }  from '../components/Emogis';
 
 export const Chat = () => {
     const generalUser = { id: 'general', name: 'General' }
+    const [messageToSend, setMessageToSend] = useState("");
     const [_, navigate] = useLocation()
     const { state, functions } = useContext(GlobalContext)
 
@@ -23,8 +24,11 @@ export const Chat = () => {
     const onSubmitMessage = (event) => {
         event.preventDefault();
         functions.sendMessage(event.target.texttosend.value)
-        event.target.texttosend.value = ''
+        //event.target.texttosend.value = ''
+        //functions.sendMessage(messageToSend);
+        setMessageToSend("");
     }
+
 
     return <main className="h-screen w-screen flex">
         <aside className="h-screen w-[300px] bg-gray-800">
@@ -50,8 +54,9 @@ export const Chat = () => {
             </section>
             <section className="mb-5 px-40">
                 <form onSubmit={onSubmitMessage} className="flex gap-4">
-                    <input name="texttosend" type="text" className="border rounded w-full px-2" />
-                    <Emogis onSubmit={onSubmitMessage} />
+                    <input name="texttosend" type="text" className="border rounded w-full px-2" value={messageToSend}
+                    onChange={(e) => setMessageToSend(e.target.value)} />
+                    <EmojiMenuPicker onClick={(emoji) => setMessageToSend(prev =>  prev + emoji)} />
                     <button className="bg-blue-900 rounded py-1 px-4 text-white">Enviar</button>
                 </form>
             </section>
